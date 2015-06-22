@@ -9,12 +9,15 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -318,11 +321,93 @@ public class Main {
         String strNull = null;
         Optional nullableOptional = Optional.ofNullable(strNull);
 
-        Optional stringToUse = Optional.of( "optional is there" );
+        Optional<String> stringToUse = Optional.of( "optional is there" );
         
         stringToUse.ifPresent( System.out::println );
 
         
+        List<String> stringCollection = new ArrayList<>();
+        stringCollection.add("ddd2");
+        stringCollection.add("aaa2");
+        stringCollection.add("bbb1");
+        stringCollection.add("aaa1");
+        stringCollection.add("bbb3");
+        stringCollection.add("ccc");
+        stringCollection.add("bbb2");
+        stringCollection.add("ddd1");
+        
+        // Filter
+        stringCollection
+        .stream()
+        .filter((s) -> s.startsWith("a"))
+        .forEach(System.out::println);
+        
+        // Sorted
+        stringCollection
+        .stream()
+        .sorted()
+        .filter((s) -> s.startsWith("a"))
+        .forEach(System.out::println);
+        
+        
+        // Map
+        stringCollection
+        .stream()
+        .map(String::toUpperCase)
+        .sorted((a, b) -> b.compareTo(a))
+        .forEach(System.out::println);
+        
+        // Match
+        boolean anyStartsWithA =
+        	    stringCollection
+        	        .stream()
+        	        .anyMatch((s) -> s.startsWith("a"));
+
+        	System.out.println(anyStartsWithA);      // true
+
+        	boolean allStartsWithA =
+        	    stringCollection
+        	        .stream()
+        	        .allMatch((s) -> s.startsWith("a"));
+
+        	System.out.println(allStartsWithA);      // false
+
+        	boolean noneStartsWithZ =
+        	    stringCollection
+        	        .stream()
+        	        .noneMatch((s) -> s.startsWith("z"));
+
+        	System.out.println(noneStartsWithZ);      // true
+        	
+        	// Count
+        	long startsWithB =
+        		    stringCollection
+        		        .stream()
+        		        .filter((s) -> s.startsWith("b"))
+        		        .count();
+
+        		System.out.println(startsWithB);    // 3
+        		
+        		// Reduce
+        		Optional<String> reduced =
+        	    stringCollection
+        	        .stream()
+        	        .sorted()
+        	        .reduce((s1, s2) -> s1 + "#" + s2);
+
+        	reduced.ifPresent(System.out::println);
+        	
+        	// Local Time in Java 8
+        	LocalTime late = LocalTime.of(23, 59, 59);
+        	System.out.println(late);       // 23:59:59
+
+        	DateTimeFormatter germanFormatter =
+        	    DateTimeFormatter
+        	        .ofLocalizedTime(FormatStyle.SHORT)
+        	        .withLocale(Locale.GERMAN);
+
+        	LocalTime leetTime = LocalTime.parse("13:37", germanFormatter);
+        	System.out.println(leetTime);   // 13:37
 	}
 
 
