@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Locale;
@@ -408,6 +409,25 @@ public class Main {
 
         	LocalTime leetTime = LocalTime.parse("13:37", germanFormatter);
         	System.out.println(leetTime);   // 13:37
+        	
+        	// Java 8 foreach Example
+        	
+        	Map<String, Integer> items = new HashMap<>();
+        	items.put("A", 10);
+        	items.put("B", 20);
+        	items.put("C", 30);
+        	items.put("D", 40);
+        	items.put("E", 50);
+        	items.put("F", 60);
+        	
+        	items.forEach((k,v)->System.out.println("Item : " + k + " Count : " + v));
+        	
+        	items.forEach((k,v)->{
+        		System.out.println("Item : " + k + " Count : " + v);
+        		if("E".equals(k)){
+        			System.out.println("Hello E");
+        		}
+        	});
 	}
 
 
